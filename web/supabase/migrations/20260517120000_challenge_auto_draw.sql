@@ -1,0 +1,324 @@
+-- Auto-draw deck for challenges.
+--
+-- Challenges are now hidden (visible=false) by default. The map only renders
+-- visible ones for players (admins see them all). Game start deals 6 visible
+-- challenges, and the first complete/fail of a visible challenge deals 3 more.
+-- The triggered_new_batch flag ensures each challenge fires its batch at most
+-- once even if completed/failed multiple ways.
+
+alter table public.challenges
+  add column visible              boolean not null default false,
+  add column triggered_new_batch  boolean not null default false;
+
+create index challenges_visible_idx
+  on public.challenges (game_id, visible);
+
+-- ============================================================
+-- draw_random_challenges — admin-callable: reveal N hidden challenges
+-- ============================================================
+create or replace function public.draw_random_challenges(
+  p_game_id uuid,
+  p_n       integer
+)
+returns integer
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_drawn integer;
+begin
+  if auth.uid() is null then
+    raise exception 'not authenticated' using errcode = '42501';
+  end if;
+  if not public.is_admin_of_game(p_game_id) then
+    raise exception 'admin only' using errcode = '42501';
+  end if;
+  if p_n is null or p_n <= 0 then
+    return 0;
+  end if;
+
+  with picked as (
+    select id from public.challenges
+    where game_id = p_game_id
+      and status = 'open'
+      and visible = false
+    order by random()
+    limit p_n
+    for update skip locked
+  )
+  update public.challenges c
+  set visible = true
+  from picked
+  where c.id = picked.id;
+
+  get diagnostics v_drawn = row_count;
+
+  if v_drawn > 0 then
+    insert into public.events (game_id, type, payload)
+    values (
+      p_game_id,
+      'challenges_drawn',
+      jsonb_build_object('count', v_drawn, 'trigger', 'manual')
+    );
+  end if;
+
+  return v_drawn;
+end;
+$$;
+
+grant execute on function public.draw_random_challenges(uuid, integer) to authenticated;
+
+-- ============================================================
+-- complete_challenge — same as before plus first-resolution batch draw
+-- ============================================================
+create or replace function public.complete_challenge(
+  p_challenge_id    uuid,
+  p_reward_choice   integer default null,
+  p_target_team_id  uuid default null
+)
+returns public.challenges
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_user_id        uuid := auth.uid();
+  v_team_id        uuid;
+  v_challenge      public.challenges;
+  v_reward         integer;
+  v_target_chips   integer;
+  v_team_chips     integer;
+  v_transfer       integer;
+  v_should_draw    boolean;
+  v_drawn          integer;
+begin
+  if v_user_id is null then
+    raise exception 'not authenticated' using errcode = '42501';
+  end if;
+
+  select * into v_challenge
+  from public.challenges
+  where id = p_challenge_id
+  for update;
+  if not found then
+    raise exception 'challenge not found' using errcode = '22023';
+  end if;
+
+  if v_challenge.status <> 'revealed' then
+    raise exception 'challenge is not in a revealed state' using errcode = '22023';
+  end if;
+
+  select tm.team_id into v_team_id
+  from public.team_members tm
+  where tm.user_id = v_user_id and tm.game_id = v_challenge.game_id;
+  if v_team_id is null or v_team_id <> v_challenge.revealed_by_team_id then
+    raise exception 'only the revealing team can complete' using errcode = '42501';
+  end if;
+
+  v_should_draw := not v_challenge.triggered_new_batch;
+
+  if v_challenge.type = 'ordinary' then
+    v_reward := coalesce(p_reward_choice, v_challenge.reward_max);
+    if v_reward < v_challenge.reward_min or v_reward > v_challenge.reward_max then
+      raise exception
+        'reward % outside allowed range %-%',
+        v_reward, v_challenge.reward_min, v_challenge.reward_max
+        using errcode = '22023';
+    end if;
+    update public.teams set chips = chips + v_reward where id = v_team_id;
+
+  elsif v_challenge.type = 'multiplier' then
+    select chips into v_team_chips from public.teams where id = v_team_id for update;
+    v_reward := v_team_chips * v_challenge.reward_min - v_team_chips;
+    update public.teams set chips = chips * v_challenge.reward_min where id = v_team_id;
+
+  elsif v_challenge.type = 'steal' then
+    if p_target_team_id is null then
+      raise exception 'target team required for steal' using errcode = '22023';
+    end if;
+    if p_target_team_id = v_team_id then
+      raise exception 'cannot steal from your own team' using errcode = '22023';
+    end if;
+    perform 1 from public.teams
+      where id = p_target_team_id and game_id = v_challenge.game_id;
+    if not found then
+      raise exception 'target team is not in this game' using errcode = '22023';
+    end if;
+
+    select chips into v_target_chips
+    from public.teams where id = p_target_team_id for update;
+
+    v_transfer := (v_target_chips * v_challenge.reward_min) / 100;
+    if v_target_chips > 0 and v_transfer < 1 then v_transfer := 1; end if;
+    if v_transfer > v_target_chips then v_transfer := v_target_chips; end if;
+
+    update public.teams set chips = chips - v_transfer where id = p_target_team_id;
+    update public.teams set chips = chips + v_transfer where id = v_team_id;
+    v_reward := v_transfer;
+
+  else
+    raise exception 'unknown challenge type %', v_challenge.type using errcode = '22023';
+  end if;
+
+  update public.challenges
+  set status = 'completed',
+      completed_by_team_id = v_team_id,
+      completed_at = now(),
+      reward_awarded = v_reward,
+      locked_until = null,
+      triggered_new_batch = true
+  where id = p_challenge_id
+  returning * into v_challenge;
+
+  insert into public.events (game_id, type, payload)
+  values (
+    v_challenge.game_id,
+    'challenge_completed',
+    jsonb_build_object(
+      'challenge_id', v_challenge.id,
+      'team_id', v_team_id,
+      'user_id', v_user_id,
+      'reward', v_reward,
+      'challenge_type', v_challenge.type,
+      'target_team_id', p_target_team_id,
+      'town', v_challenge.town
+    )
+  );
+
+  if v_should_draw then
+    with picked as (
+      select id from public.challenges
+      where game_id = v_challenge.game_id
+        and status = 'open'
+        and visible = false
+      order by random()
+      limit 3
+      for update skip locked
+    )
+    update public.challenges c
+    set visible = true
+    from picked
+    where c.id = picked.id;
+
+    get diagnostics v_drawn = row_count;
+
+    if v_drawn > 0 then
+      insert into public.events (game_id, type, payload)
+      values (
+        v_challenge.game_id,
+        'challenges_drawn',
+        jsonb_build_object(
+          'count', v_drawn,
+          'trigger', 'complete',
+          'challenge_id', v_challenge.id
+        )
+      );
+    end if;
+  end if;
+
+  return v_challenge;
+end;
+$$;
+
+grant execute on function public.complete_challenge(uuid, integer, uuid) to authenticated;
+
+-- ============================================================
+-- fail_challenge — same as before plus first-resolution batch draw
+-- ============================================================
+create or replace function public.fail_challenge(p_challenge_id uuid)
+returns public.challenges
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_user_id     uuid := auth.uid();
+  v_team_id     uuid;
+  v_challenge   public.challenges;
+  v_should_draw boolean;
+  v_drawn       integer;
+begin
+  if v_user_id is null then
+    raise exception 'not authenticated' using errcode = '42501';
+  end if;
+
+  select * into v_challenge
+  from public.challenges where id = p_challenge_id for update;
+  if not found then
+    raise exception 'challenge not found' using errcode = '22023';
+  end if;
+
+  if v_challenge.status <> 'revealed' then
+    raise exception 'challenge is not in a revealed state' using errcode = '22023';
+  end if;
+
+  select tm.team_id into v_team_id
+  from public.team_members tm
+  where tm.user_id = v_user_id and tm.game_id = v_challenge.game_id;
+  if v_team_id is null or v_team_id <> v_challenge.revealed_by_team_id then
+    raise exception 'only the revealing team can fail this' using errcode = '42501';
+  end if;
+
+  v_should_draw := not v_challenge.triggered_new_batch;
+
+  update public.challenges
+  set status = 'open',
+      revealed_by_team_id = null,
+      revealed_at = null,
+      locked_until = null,
+      failed_team_ids = array_append(failed_team_ids, v_team_id),
+      triggered_new_batch = true
+  where id = p_challenge_id
+  returning * into v_challenge;
+
+  insert into public.events (game_id, type, payload)
+  values (
+    v_challenge.game_id,
+    'challenge_failed',
+    jsonb_build_object(
+      'challenge_id', v_challenge.id,
+      'team_id', v_team_id,
+      'user_id', v_user_id,
+      'town', v_challenge.town,
+      'challenge_type', v_challenge.type
+    )
+  );
+
+  if v_should_draw then
+    with picked as (
+      select id from public.challenges
+      where game_id = v_challenge.game_id
+        and status = 'open'
+        and visible = false
+        and id <> v_challenge.id
+      order by random()
+      limit 3
+      for update skip locked
+    )
+    update public.challenges c
+    set visible = true
+    from picked
+    where c.id = picked.id;
+
+    get diagnostics v_drawn = row_count;
+
+    if v_drawn > 0 then
+      insert into public.events (game_id, type, payload)
+      values (
+        v_challenge.game_id,
+        'challenges_drawn',
+        jsonb_build_object(
+          'count', v_drawn,
+          'trigger', 'fail',
+          'challenge_id', v_challenge.id
+        )
+      );
+    end if;
+  end if;
+
+  return v_challenge;
+end;
+$$;
+
+grant execute on function public.fail_challenge(uuid) to authenticated;

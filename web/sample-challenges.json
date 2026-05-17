@@ -1,0 +1,96 @@
+[
+  {
+    "town": "Praha",
+    "lat": 50.0865,
+    "lng": 14.4114,
+    "type": "ordinary",
+    "reward": 50,
+    "title": "Saint relay",
+    "description": "Charles Bridge has 30 baroque statues along its length. Start at the statue of St. John of Nepomuk (the one with the bronze plaque that everyone rubs for luck, north side, roughly in the middle). One teammate must walk the full bridge end to end without backtracking, reading aloud and writing down the Czech name carved on every statue they can identify. Photo of the finished list plus the team at the start statue. No Google."
+  },
+  {
+    "town": "Kutná Hora",
+    "lat": 49.9617,
+    "lng": 15.2882,
+    "type": "ordinary",
+    "reward": 70,
+    "title": "Count the dead",
+    "description": "Sedlec Ossuary (the Bone Church) has four enormous skull pyramids, one in each corner of the crypt. Pick any one as a team, agree before counting. Each teammate counts it silently on their own — no phones, no whispered coordination. Write your numbers down at the same time. If you all agree within ±10% of each other, the reward is yours. One attempt per team."
+  },
+  {
+    "town": "Karlovy Vary",
+    "lat": 50.2237,
+    "lng": 12.8746,
+    "type": "multiplier",
+    "reward": 2,
+    "title": "Blind taster",
+    "description": "The Mill Colonnade (Mlýnská kolonáda) has 5 of the 12 famous Karlovy Vary thermal springs in a row, each a different temperature between ~30°C and ~65°C. Buy a porcelain spa cup (a few Kč), fill it from each spring, sip a tiny amount, rank them coldest → hottest. No thermometers, no reading the signs. Get all 5 in the correct order — your team's chips double."
+  },
+  {
+    "town": "Telč",
+    "lat": 49.1837,
+    "lng": 15.4524,
+    "type": "ordinary",
+    "reward": 35,
+    "title": "Find the impostor",
+    "description": "The UNESCO main square has ~30 renaissance houses, all sgraffito-decorated but each subtly different. Admins drop a cropped photo of one window decoration in the team chat when this challenge is revealed. Find the exact building, photograph the team in front of it with the matching window clearly in frame."
+  },
+  {
+    "town": "Český Krumlov",
+    "lat": 48.8127,
+    "lng": 14.3148,
+    "type": "multiplier",
+    "reward": 2,
+    "title": "Bear witness",
+    "description": "Real live bears live in the moat below the second courtyard of Český Krumlov Castle (uninterrupted tradition since 1707). Photograph both resident bears in the same frame as one teammate's face — your team's chips double."
+  },
+  {
+    "town": "Olomouc",
+    "lat": 49.5956,
+    "lng": 17.2514,
+    "type": "ordinary",
+    "reward": 50,
+    "title": "Saint census",
+    "description": "The Holy Trinity Column on Horní náměstí (UNESCO, 35m tall, the most extravagant baroque column in central Europe) is plastered with stone saints, reliefs, putti, and angels. Two teammates start on opposite sides of the column and independently count the total number of clearly distinguishable human figures — no phones, no whispering. You win if the two counts are within 2 of each other."
+  },
+  {
+    "town": "Pardubice",
+    "lat": 50.0381,
+    "lng": 15.7793,
+    "type": "ordinary",
+    "reward_min": 10,
+    "reward_max": 60,
+    "lock_minutes": 25,
+    "title": "Gingerbread gauntlet",
+    "description": "Pardubice is famous for perník. At any traditional perníkárna in town, the team eats as many distinct shapes/flavors of perník as they can stomach in 20 minutes — no water, juice, or beer in between bites. Reward scales with quantity: 1 piece = 10 chips, 2 = 20, 3 = 30, … up to 6 = 60 chips. Photo of every wrapper + a video of the final bite of the last piece."
+  },
+  {
+    "town": "Liberec",
+    "lat": 50.7333,
+    "lng": 14.9846,
+    "type": "multiplier",
+    "reward": 3,
+    "lock_minutes": 90,
+    "title": "Sightline",
+    "description": "Get up to the Ještěd Tower observation deck (cable car or hike, your call). From the deck, on video, name aloud 5 distinct cities or landmarks visible on the horizon, pointing at each, AND correctly identify Bezděz Castle (a distinctive twin-peaked silhouette roughly 50 km SSW). All six in one take — your team's chips triple."
+  },
+  {
+    "town": "Plzeň",
+    "lat": 49.7479,
+    "lng": 13.3851,
+    "type": "ordinary",
+    "reward": 50,
+    "title": "Old cellar test",
+    "description": "Take the Pilsner Urquell brewery tour. Inside the 9 km of historic sandstone lagering cellars, find one of the original oak lagering barrels (they still age a tiny amount of beer the traditional way for the tour). Photograph a teammate next to the barrel with the year visibly carved or branded into the wood readable in the shot. No asking the guide where the year is."
+  },
+  {
+    "town": "Mikulov",
+    "lat": 48.806,
+    "lng": 16.6328,
+    "type": "steal",
+    "reward": 50,
+    "lock_minutes": 60,
+    "title": "Stations relay",
+    "description": "Svatý kopeček (Holy Hill) above Mikulov has 14 baroque chapels marking the Stations of the Cross, climbing all the way to the church on top. The team climbs together (no splitting up) and takes a single group photo at every odd-numbered chapel: 1, 3, 5, 7, 9, 11, 13, then a final photo at the church. Miss any one and the challenge is forfeit. On completion, your team picks any rival team and takes 50% of their chips."
+  }
+]
