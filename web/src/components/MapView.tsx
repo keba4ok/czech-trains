@@ -42,6 +42,8 @@ export type Challenge = {
   visible: boolean;
 };
 
+export type Region = "czech" | "berlin";
+
 type Props = {
   stations: Station[];
   claimsByStation?: Record<string, Claim>;
@@ -49,10 +51,16 @@ type Props = {
   challenges?: Challenge[];
   onSelectStation?: (stationId: string) => void;
   onSelectChallenge?: (challengeId: string) => void;
+  region?: Region;
 };
 
-const CZ_CENTER: [number, number] = [49.8, 15.5];
-const DEFAULT_ZOOM = 7;
+const REGION_VIEW: Record<
+  Region,
+  { center: [number, number]; zoom: number }
+> = {
+  czech: { center: [49.8, 15.5], zoom: 7 },
+  berlin: { center: [52.52, 13.405], zoom: 11 },
+};
 
 const UNCLAIMED_STROKE = "#52525b";
 const UNCLAIMED_FILL = "#e4e4e7";
@@ -101,12 +109,14 @@ export default function MapView({
   challenges = [],
   onSelectStation,
   onSelectChallenge,
+  region = "czech",
 }: Props) {
   const renderableChallenges = challenges.filter((c) => c.visible);
+  const { center, zoom } = REGION_VIEW[region];
   return (
     <MapContainer
-      center={CZ_CENTER}
-      zoom={DEFAULT_ZOOM}
+      center={center}
+      zoom={zoom}
       preferCanvas
       className="h-full w-full bg-zinc-950"
     >

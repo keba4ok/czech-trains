@@ -25,7 +25,7 @@ export default function RewardFields({
   // Steal and multiplier are single-value; keep min and max in lockstep.
   const handleTypeChange = (next: ChallengeType) => {
     if (next === "steal" || next === "multiplier") {
-      const base = next === "multiplier" ? Math.max(2, min) : min;
+      const base = next === "multiplier" ? Math.max(1.5, min) : min;
       setMin(base);
       setMax(base);
     }
@@ -103,9 +103,10 @@ export default function RewardFields({
                 type="number"
                 required
                 min={1}
+                step={0.1}
                 value={min}
                 onChange={(e) => {
-                  const v = Number.parseInt(e.target.value || "0", 10);
+                  const v = Number.parseFloat(e.target.value || "0");
                   setMin(v);
                   setMax(v);
                 }}

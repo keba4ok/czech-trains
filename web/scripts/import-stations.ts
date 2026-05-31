@@ -1,8 +1,11 @@
 /**
- * One-off importer for Czech Republic railway stations and halts from OpenStreetMap.
+ * One-off importer for railway stations from OpenStreetMap.
  * Idempotent: upserts by osm_id, so re-running just refreshes the row data.
  *
- * Run with:  pnpm db:import-stations
+ * Run with:  pnpm db:import-stations:czech
+ *            pnpm db:import-stations:berlin
+ *
+ * The legacy `pnpm db:import-stations` alias still imports the Czech set.
  */
 import { createClient } from "@supabase/supabase-js";
 
@@ -16,8 +19,18 @@ if (!SUPABASE_URL || !SUPABASE_SECRET) {
 
 const OVERPASS_URL = "https://overpass-api.de/api/interpreter";
 
-// Pull every node tagged railway=station or railway=halt inside the Czech Republic.
-const QUERY = `
+type RegionId = "czech" | "berlin";
+
+type RegionConfig = {
+  query: string;
+  /** Maps an Overpass node to its station `kind`, or `null` to skip it. */
+  kindOf: (tags: Record<string, string> | undefined) => "station" | "halt" | null;
+};
+
+const REGIONS: Record<RegionId, RegionConfig> = {
+  // Every CZ node tagged railway=station or railway=halt.
+  czech: {
+    query: `
 [out:json][timeout:120];
 area["ISO3166-1"="CZ"][admin_level=2]->.cz;
 (
@@ -25,7 +38,23 @@ area["ISO3166-1"="CZ"][admin_level=2]->.cz;
   node["railway"="halt"](area.cz);
 );
 out body;
-`.trim();
+`.trim(),
+    kindOf: (tags) => (tags?.railway === "halt" ? "halt" : "station"),
+  },
+  // Berlin U-Bahn (subway) + S-Bahn (light_rail) stations.
+  berlin: {
+    query: `
+[out:json][timeout:120];
+area["name"="Berlin"]["admin_level"="4"]->.bln;
+(
+  node["railway"="station"]["station"="subway"](area.bln);
+  node["railway"="station"]["station"="light_rail"](area.bln);
+);
+out body;
+`.trim(),
+    kindOf: () => "station",
+  },
+};
 
 type OverpassNode = {
   type: "node";
@@ -43,13 +72,27 @@ type StationRow = {
   lng: number;
   kind: "station" | "halt";
   lines: string[];
+  region: RegionId;
 };
 
-async function fetchOSM(): Promise<OverpassNode[]> {
-  console.log("Querying Overpass for CZ railway stations + halts…");
+function parseRegion(): RegionId {
+  const idx = process.argv.indexOf("--region");
+  const raw =
+    idx >= 0 && process.argv[idx + 1] ? process.argv[idx + 1] : "czech";
+  if (raw !== "czech" && raw !== "berlin") {
+    throw new Error(
+      `Unknown --region "${raw}". Valid values: czech, berlin.`,
+    );
+  }
+  return raw;
+}
+
+async function fetchOSM(region: RegionId): Promise<OverpassNode[]> {
+  const { query } = REGIONS[region];
+  console.log(`Querying Overpass for ${region} railway stations…`);
   const res = await fetch(OVERPASS_URL, {
     method: "POST",
-    body: `data=${encodeURIComponent(QUERY)}`,
+    body: `data=${encodeURIComponent(query)}`,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       // Overpass policy requires a descriptive UA; anonymous requests are rejected with 406.
@@ -63,10 +106,11 @@ async function fetchOSM(): Promise<OverpassNode[]> {
   return data.elements.filter((e) => e.type === "node");
 }
 
-function nodeToRow(n: OverpassNode): StationRow | null {
+function nodeToRow(n: OverpassNode, region: RegionId): StationRow | null {
   const name = n.tags?.name ?? n.tags?.["name:cs"] ?? n.tags?.["name:en"];
   if (!name) return null;
-  const kind = n.tags?.railway === "halt" ? "halt" : "station";
+  const kind = REGIONS[region].kindOf(n.tags);
+  if (!kind) return null;
   return {
     osm_id: n.id,
     name,
@@ -74,15 +118,17 @@ function nodeToRow(n: OverpassNode): StationRow | null {
     lng: n.lon,
     kind,
     lines: [],
+    region,
   };
 }
 
 async function main() {
-  const nodes = await fetchOSM();
+  const region = parseRegion();
+  const nodes = await fetchOSM(region);
   console.log(`Overpass returned ${nodes.length} nodes.`);
 
   const rows = nodes
-    .map(nodeToRow)
+    .map((n) => nodeToRow(n, region))
     .filter((r): r is StationRow => r !== null);
   const skipped = nodes.length - rows.length;
   console.log(
@@ -107,9 +153,10 @@ async function main() {
 
   const { count, error: countErr } = await supabase
     .from("stations")
-    .select("*", { count: "exact", head: true });
+    .select("*", { count: "exact", head: true })
+    .eq("region", region);
   if (countErr) throw countErr;
-  console.log(`Done. Total stations in DB: ${count}.`);
+  console.log(`Done. Total ${region} stations in DB: ${count}.`);
 }
 
 main().catch((err) => {

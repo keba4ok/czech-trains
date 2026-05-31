@@ -1,0 +1,286 @@
+[
+  {
+    "town": "Mitte",
+    "lat": 52.5163,
+    "lng": 13.3777,
+    "type": "ordinary",
+    "reward": 40,
+    "title": "Quadriga inventory",
+    "description": "Stand directly under the Brandenburger Tor. The Quadriga on top — Victoria driving her chariot — was famously stolen by Napoleon in 1806 and dragged to Paris before being returned in 1814. Without phones, two teammates independently count: (a) the number of horses, (b) the number of columns on the gate (both sides combined), (c) the number of reliefs visible on the inside ceiling of the central passage. All three answers must match between the two counters. One photo of the team under the arch with the Quadriga clearly above."
+  },
+  {
+    "town": "Mitte",
+    "lat": 52.5208,
+    "lng": 13.4094,
+    "type": "multiplier",
+    "reward": 1.5,
+    "lock_minutes": 60,
+    "title": "Pope's revenge",
+    "description": "Get up the Fernsehturm at Alexanderplatz (203 m, the tallest structure in Germany). On sunny days the stainless-steel sphere reflects a cross-shaped glare — locals call it 'Rache des Papstes' (the Pope's Revenge) because the GDR built an officially atheist tower that ended up shining a giant cross over East Berlin. From the observation deck, on one video, point at and correctly name: Reichstag, Berliner Dom, Siegessäule, Olympiastadion, and the Funkturm. Five for five — your team's chips multiply by 1.5."
+  },
+  {
+    "town": "Friedrichshain",
+    "lat": 52.5050,
+    "lng": 13.4399,
+    "type": "ordinary",
+    "reward": 55,
+    "title": "Brotherly kiss",
+    "description": "The East Side Gallery is the longest remaining stretch of the Berlin Wall (1.3 km) — 105 murals painted directly on the eastern side in 1990. Find Dmitri Vrubel's 'Mein Gott, hilf mir, diese tödliche Liebe zu überleben' — the painting of Brezhnev and Honecker kissing on the mouth, recreating an actual 1979 photo. Photograph the whole team mimicking the pose in front of it. No photoshop, no cropping someone out — the full team has to be in frame with the mural readable behind."
+  },
+  {
+    "town": "Kreuzberg",
+    "lat": 52.5076,
+    "lng": 13.3904,
+    "type": "ordinary",
+    "reward": 35,
+    "title": "Four-language frontier",
+    "description": "Checkpoint Charlie was the only crossing point for foreigners and Allied personnel between East and West Berlin from 1961 to 1990 — the famous 1961 American-Soviet tank standoff happened right here. The replica sign reads 'YOU ARE LEAVING THE AMERICAN SECTOR' in four languages. Photograph the team in front of the sign while each teammate reads the warning aloud in a different one of the four languages (English, Russian, French, German). One language per teammate, no repeats. Video, not photo."
+  },
+  {
+    "town": "Kreuzberg",
+    "lat": 52.4924,
+    "lng": 13.3884,
+    "type": "ordinary",
+    "reward_min": 20,
+    "reward_max": 60,
+    "lock_minutes": 45,
+    "title": "Mehringdamm duel",
+    "description": "At Mehringdamm U-Bahn, two of Berlin's most argued-over street food spots sit thirty meters apart: Mustafa's Gemüse Kebap (the legendary queue) and Curry 36 (open since 1981, currywurst institution). The team must eat one Mustafa's kebab AND one Curry 36 currywurst mit Darm (with skin), then on camera, each teammate names which they preferred and gives one specific reason. Reward scales: 2 teammates voting = 20 chips, 3 = 40, 4+ = 60. Receipts plus a group photo holding both items in the same frame."
+  },
+  {
+    "town": "Mitte",
+    "lat": 52.5359,
+    "lng": 13.3920,
+    "type": "steal",
+    "reward": 40,
+    "lock_minutes": 60,
+    "title": "Death strip walk",
+    "description": "The Berlin Wall Memorial on Bernauer Straße preserves the only complete section of the border fortifications: outer wall, death strip, watchtower, inner wall. 140 people died trying to cross and over 70 escape tunnels were dug under this street — Tunnel 57, the most famous, brought 57 East Berliners west in two nights in October 1964. From the watchtower viewing platform, identify on the ground below: the line of the outer wall, the patrol road, the lighting strip, and at least one of the marked escape tunnel locations. One teammate narrates each on video while pointing — no reading off the info signs aloud. On completion, your team tunnels under any rival team and takes 40% of their chips."
+  },
+  {
+    "town": "Tiergarten",
+    "lat": 52.5145,
+    "lng": 13.3501,
+    "type": "multiplier",
+    "reward": 1.2,
+    "lock_minutes": 30,
+    "title": "Goldelse summit",
+    "description": "The Siegessäule (Victory Column) was originally built in 1873 to celebrate Prussian wars; Hitler had it moved here from in front of the Reichstag and made it taller. Locals nicknamed the gilded Victoria on top 'Goldelse' (Golden Lizzy). 285 spiral steps to the observation platform — no elevator. The whole team climbs together, no leaving anyone behind, and takes a group photo at the top with at least three teammates visibly out of breath. Your team's chips multiply by 1.2."
+  },
+  {
+    "town": "Tiergarten",
+    "lat": 52.5186,
+    "lng": 13.3762,
+    "type": "multiplier",
+    "reward": 1.7,
+    "lock_minutes": 120,
+    "title": "Foster's spiral",
+    "description": "The Reichstag's glass dome (designed by Norman Foster after reunification, opened 1999) sits directly above the parliamentary chamber so citizens can literally stand over their politicians. Booking required — handle it as a team beforehand. Walk the full spiral ramp from bottom to top, the whole team together. At the very top, looking down through the inverted mirror cone into the chamber, one teammate reads aloud Article 1 of the Grundgesetz: 'Die Würde des Menschen ist unantastbar.' Video. Your team's chips multiply by 1.7."
+  },
+  {
+    "town": "Mitte",
+    "lat": 52.5139,
+    "lng": 13.3789,
+    "type": "ordinary",
+    "reward": 50,
+    "title": "Disorientation",
+    "description": "The Memorial to the Murdered Jews of Europe (Peter Eisenman, 2005) has 2,711 concrete stelae of varying heights on uneven ground — the architect's stated intention is to disorient. The whole team enters together from the northwest corner. Each teammate walks alone, silently, for at least three full minutes inside the grid (no phones, no headphones), then meets at the southeast corner. After regrouping, each person says one word describing what they felt — no repeating someone else's word. Video of the regroup."
+  },
+  {
+    "town": "Mitte",
+    "lat": 52.5198,
+    "lng": 13.3978,
+    "type": "ordinary",
+    "reward": 55,
+    "title": "Five museums, one island",
+    "description": "Museumsinsel is the only UNESCO-listed group of museums in the world: Altes Museum, Neues Museum, Alte Nationalgalerie, Bode-Museum, Pergamonmuseum. Walk a loop touching the outside wall of all five buildings in any order, on camera (continuous video, no cuts longer than 2 seconds). At each building one teammate slaps the wall and says its name. Five buildings, five slaps, five names, one shot."
+  },
+  {
+    "town": "Mitte",
+    "lat": 52.5239,
+    "lng": 13.4023,
+    "type": "ordinary",
+    "reward": 40,
+    "title": "Through the Höfe",
+    "description": "Hackesche Höfe is a chain of 8 interconnected Art Nouveau courtyards from 1906 — the largest closed courtyard complex in Germany. The team enters from Rosenthaler Straße 40-41 and walks all the way through to Sophienstraße without ever stepping back into the street. At Hof IV (the famous tile-fronted one with the staircase), the whole team poses in front of the Endell tiles. One photo per Hof, all 8, in order."
+  },
+  {
+    "town": "Prenzlauer Berg",
+    "lat": 52.5419,
+    "lng": 13.4019,
+    "type": "steal",
+    "reward": 30,
+    "lock_minutes": 30,
+    "title": "Bearpit karaoke",
+    "description": "Only attemptable on a Sunday afternoon. Mauerpark's amphitheater hosts Bearpit Karaoke every summer Sunday — Joe Hatchiban shows up with a bike trailer of speakers and a few thousand strangers fill the steps. One teammate signs up and performs a full song in front of the crowd. Audience cheer at the end has to be louder than polite — visible enthusiasm on video. If the crowd actually sings along with even part of the chorus, you've stolen the show — pick any rival team and take 30% of their chips."
+  },
+  {
+    "town": "Prenzlauer Berg",
+    "lat": 52.5409,
+    "lng": 13.4118,
+    "type": "ordinary",
+    "reward": 30,
+    "title": "Under the U-Bahn",
+    "description": "Konnopke's Imbiß has been slinging currywurst from under the elevated U2 tracks at Eberswalder Straße since 1960 — the GDR-era kiosk that survived reunification. Order one currywurst mit Darm and one currywurst ohne Darm (with and without the natural casing) and a Berliner Pilsner per teammate. On camera, each teammate takes one bite of each and declares 'mit' or 'ohne' preference. The U-Bahn must visibly rumble over your heads at least once during the video. Patience."
+  },
+  {
+    "town": "Friedrichshain",
+    "lat": 52.5111,
+    "lng": 13.4434,
+    "type": "steal",
+    "reward": 50,
+    "lock_minutes": 45,
+    "title": "Outside the Temple",
+    "description": "Berghain — the former Heizkraftwerk power station that became the most famous techno club on earth. Do NOT attempt to get in (the queue is a multi-hour gamble and Sven Marquardt rejects on vibes). Instead, walk the entire perimeter of the building as a team, in one continuous loop, identifying on video: the main entrance, the loading dock at the back, the Panorama Bar windows on the upper floor, and the chain-link fence. If anyone in your team has actually been in within the last 12 months and can prove it with a stamp photo, the loop counts double-speed. On completion, your team raids any rival team and takes 50% of their chips."
+  },
+  {
+    "town": "Kreuzberg",
+    "lat": 52.4978,
+    "lng": 13.4364,
+    "type": "ordinary",
+    "reward": 40,
+    "title": "Görli sundown",
+    "description": "Görlitzer Park ('Görli') is built on a former railway terminus, now Kreuzberg's most chaotic green space — sunbathers, families, dealers, dogs, all sharing the same lawn. Find the small artificial pond on the southern side. The team buys one Sterni (Sternburg, the 0.5L cheap Berliner Pils, must be from a Späti, no fancy bar beer) per drinking-age teammate. Sit together facing the sunset, on camera, and clink bottles simultaneously. Then one teammate must correctly name what kind of building used to occupy this park before 1962 (hint: it's why the park is shaped like a wedge)."
+  },
+  {
+    "town": "Friedrichshain",
+    "lat": 52.5018,
+    "lng": 13.4458,
+    "type": "ordinary",
+    "reward": 50,
+    "title": "Bridge of stones",
+    "description": "The Oberbaumbrücke (1896) connects Friedrichshain to Kreuzberg over the Spree — during the wall years the lower deck was a pedestrian-only checkpoint for West Berliners visiting the East. The two neoclassical towers in the middle are a fake medieval gate, built for aesthetics. Every July since 1998 the two districts hold a giant 'Wasserschlacht' (water fight) on this bridge — Kreuzberg vs Friedrichshain. The team walks the entire length of the upper pedestrian deck single-file, one teammate behind another, each holding the shoulders of the one in front. Photo halfway across with the towers behind."
+  },
+  {
+    "town": "Wedding",
+    "lat": 52.5520,
+    "lng": 13.3358,
+    "type": "ordinary",
+    "reward": 50,
+    "title": "Bunkerberg",
+    "description": "Volkspark Humboldthain has the ruins of a Flakturm — a WWII anti-aircraft tower so massive that the Allies couldn't demolish it after the war and just buried it in rubble, creating an artificial hill. The exposed concrete face is still scarred from explosives that failed to bring it down. Climb to the top platform as a team, find the surviving concrete face on the north side, and one teammate places a flat palm on the concrete and counts aloud how many distinct blast-mark craters they can see at arm's length. Photo with the hand on the wall."
+  },
+  {
+    "town": "Schöneberg",
+    "lat": 52.4994,
+    "lng": 13.3525,
+    "type": "ordinary",
+    "reward": 55,
+    "title": "Heroes",
+    "description": "Nollendorfplatz has been Berlin's queer heart since the 1920s Weimar era (Christopher Isherwood lived in Nollendorfstraße 17 — the basis for Cabaret). The U-Bahn entrance has a pink triangle plaque commemorating gay victims of the Nazi regime. Two blocks away at Hauptstraße 155, David Bowie lived 1976-78 and recorded the Berlin Trilogy at Hansa Studios. The team must (a) photograph the pink triangle plaque, (b) photograph the Bowie commemorative plaque on his apartment building, (c) one teammate sings the opening line of 'Heroes' on video standing in front of it."
+  },
+  {
+    "town": "Charlottenburg",
+    "lat": 52.5210,
+    "lng": 13.2961,
+    "type": "ordinary",
+    "reward": 45,
+    "title": "Hohenzollern muster",
+    "description": "Schloss Charlottenburg is the largest surviving Hohenzollern palace in Berlin — built in 1699 for Queen Sophie Charlotte. Walk the full length of the front facade (Ehrenhof side) as a team. Count, independently and silently, the number of statues on the roofline of the central building (just the central rectangular block, not the wings). Two teammates compare numbers; if within 2 of each other, you score. Photo of the team with the central dome behind, equestrian statue of the Great Elector in foreground."
+  },
+  {
+    "town": "Charlottenburg",
+    "lat": 52.5048,
+    "lng": 13.3351,
+    "type": "ordinary",
+    "reward": 40,
+    "title": "Hollow tooth",
+    "description": "The Kaiser-Wilhelm-Gedächtniskirche on Breitscheidplatz was bombed on 23 November 1943. Berliners voted to leave the broken spire standing as an anti-war memorial — they nickname it 'der hohle Zahn' (the hollow tooth). Inside the new octagonal church next to it, 21,292 cobalt-blue glass blocks made in Chartres turn the whole interior deep blue. Sit silently as a team inside the new church for at least two minutes (no whispering, no phones out), then one teammate must, outside, describe in 3 sentences what it felt like. Video of the description with the hollow tooth behind."
+  },
+  {
+    "town": "Charlottenburg",
+    "lat": 52.5018,
+    "lng": 13.3411,
+    "type": "multiplier",
+    "reward": 1.3,
+    "lock_minutes": 45,
+    "title": "Sixth-floor feast",
+    "description": "KaDeWe (Kaufhaus des Westens) is the largest department store in continental Europe — 60,000 m². The 6th floor is the legendary 'Feinschmecker-Etage' with 30+ live cooking stations and over 1,000 types of cheese alone. The team must, together, sample (legitimately purchase, not free samples) at least one item from each of: the oyster bar, the Italian salumi counter, the chocolate counter, the macaron stand. Photo of all four receipts together and a group photo with the 6th floor signage. Your team's chips multiply by 1.3."
+  },
+  {
+    "town": "Charlottenburg",
+    "lat": 52.4977,
+    "lng": 13.2410,
+    "type": "steal",
+    "reward": 60,
+    "lock_minutes": 120,
+    "title": "Listening on rubble",
+    "description": "Teufelsberg ('Devil's Mountain') is a 120m artificial hill built from 75 million cubic meters of WWII Berlin rubble — under it lies a buried Nazi military-technical college Hitler never finished. On top, the Americans built an NSA listening station during the Cold War, and its weather-beaten geodesic domes still crown the peak. Hike up (no driving — the road is closed to cars), and from inside the largest dome, the whole team shouts 'TESTING TESTING' simultaneously. The echo inside the radome is famous. Video must capture at least 4 seconds of audible echo trailing off. The signal is intercepted — pick any rival team and take 60% of their chips."
+  },
+  {
+    "town": "Spandau",
+    "lat": 52.5407,
+    "lng": 13.2128,
+    "type": "ordinary",
+    "reward": 50,
+    "title": "Julius and the bats",
+    "description": "Zitadelle Spandau is one of the best-preserved Renaissance fortresses in Europe, built 1559-1594 on a moated island where the Havel meets the Spree. The Juliusturm is the medieval keep that predates the fortress — the German empire's gold war reparations from France were once stored here, which is why 'Juliusturm' became German slang for a national budget surplus. The fortress is also home to one of Germany's largest bat colonies (thousands hibernate here). Climb the Juliusturm to the top as a team, count the windows of the Palas (residential building) from above, and photograph the team with the fortress's distinctive star-bastion layout visible behind."
+  },
+  {
+    "town": "Treptow",
+    "lat": 52.4869,
+    "lng": 13.4709,
+    "type": "ordinary",
+    "reward": 55,
+    "title": "Mother of all memorials",
+    "description": "The Soviet War Memorial in Treptower Park is the burial place of 7,000 of the 80,000 Red Army soldiers who died taking Berlin in 1945. The central 12m bronze statue of a Soviet soldier holding a rescued German child and shattering a swastika with his sword stands on a hill at the end of a 200m sarcophagus-lined avenue. Walk the entire central axis as a team from the granite gateway to the statue, in silence. Count the 16 stone sarcophagi (one per Soviet republic) — each side has reliefs and a Stalin quote in Russian and German. Photo of the team at the base of the central statue."
+  },
+  {
+    "town": "Köpenick",
+    "lat": 52.4452,
+    "lng": 13.5762,
+    "type": "ordinary",
+    "reward": 45,
+    "title": "The Captain returns",
+    "description": "In 1906 an unemployed shoemaker named Wilhelm Voigt bought a second-hand army officer's uniform, walked into Köpenick town hall, commandeered a squad of soldiers off the street by impersonating a captain, arrested the mayor and emptied the town treasury — the most famous con in German history. A bronze statue of him stands in front of the Rathaus (town hall) today. The team takes a photo with one teammate striking the same pose as the statue (one foot forward, hand on hip, helmet tilted). Then walk to the Schloss Köpenick across the canal and confirm on video that the surrounding water actually makes it an island."
+  },
+  {
+    "town": "Pankow",
+    "lat": 52.5650,
+    "lng": 13.4127,
+    "type": "ordinary",
+    "reward": 40,
+    "title": "Schloss of the bonzes",
+    "description": "Schönhausen Palace was the official residence of the GDR's first and only president Wilhelm Pieck, then later Erich Honecker's guest house for state visits (Brezhnev, Gorbachev, Castro all stayed here). 'Pankow' became Western shorthand for the GDR government — 'Mr. Pankow' meant the East German regime. Walk the palace's English landscape garden along the Panke river as a team and find: (a) the orangerie, (b) the small bridge over the Panke, (c) the side gate the Stasi guarded during state visits. Photo at each of the three, plus one with the whole front facade visible."
+  },
+  {
+    "town": "Tempelhof",
+    "lat": 52.4748,
+    "lng": 13.4036,
+    "type": "ordinary",
+    "reward": 50,
+    "title": "Candy bombers",
+    "description": "Tempelhofer Feld is the former airport at the center of the 1948-49 Berlin Airlift, when Allied planes landed every 90 seconds for almost a year to keep West Berlin alive after Stalin's blockade. Pilots like Gail Halvorsen dropped candy on small parachutes for the kids waiting at the fence. The runways are now a vast public park; cyclists, kite-buggies, urban gardeners share it. The team must (a) walk the full length of one of the two main runways together (~2 km), (b) photograph the team at the threshold marker of the opposite end. No bikes, no scooters — all on foot."
+  },
+  {
+    "town": "Wannsee",
+    "lat": 52.4334,
+    "lng": 13.1738,
+    "type": "ordinary",
+    "reward_min": 20,
+    "reward_max": 60,
+    "lock_minutes": 60,
+    "title": "Strandbad scale",
+    "description": "Strandbad Wannsee opened in 1929 as the largest inland lido in Europe — 1,275 m of Baltic-style sand beach hauled in by train, with the same iconic woven Strandkörbe (hooded beach chairs) since the Weimar era. The whole team must enter the lido, change, and get into the water past knee-deep. Reward scales with commitment: knee-deep all teammates = 20 chips, waist-deep = 40, full submersion of every head = 60. Group photo wet, with the long jetty visible behind."
+  },
+  {
+    "town": "Neukölln",
+    "lat": 52.4793,
+    "lng": 13.4399,
+    "type": "multiplier",
+    "reward": 1.4,
+    "lock_minutes": 90,
+    "title": "Crane on the roof",
+    "description": "Klunkerkranich is a bar, garden, and event space on the top deck of the Neukölln Arcaden shopping mall parking garage. The entrance is genuinely the parking ramp — you walk up past parked cars and emerge in a rooftop oasis with shipping-container bars, a tiny stage, and one of the best skyline views in the city (the TV Tower, Tempelhof, Kreuzberg roofs all in one glance). The team gets a Berliner Weiße mit Schuss (one each, choose woodruff green or raspberry red — and they must NOT all pick the same color) and toasts together at sunset. Photo with all four/five glasses raised, TV Tower in frame. Your team's chips multiply by 1.4."
+  },
+  {
+    "town": "Friedrichshain",
+    "lat": 52.5189,
+    "lng": 13.4225,
+    "type": "steal",
+    "reward": 50,
+    "lock_minutes": 75,
+    "title": "Stalinist boulevard",
+    "description": "Karl-Marx-Allee (originally Stalinallee) is the GDR's grand 90m-wide socialist boulevard, built 1952-1960 in 'Zuckerbäckerstil' (wedding-cake style) as 'the first socialist street in Germany.' The workers' uprising of 17 June 1953 started right here when construction workers walked off the site. The team walks the full distance from Frankfurter Tor to Strausberger Platz (~2 km) on the north side of the boulevard, on camera (intermittent shots are fine). At both end-square 'wedding cake' tower buildings the team takes a photo with the tower fully in frame. On completion, your team picks any rival team and steals 50% of their chips."
+  }
+]

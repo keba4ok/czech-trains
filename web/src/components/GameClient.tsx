@@ -12,7 +12,7 @@ import { createClient } from "@/lib/supabase/client";
 import ChallengeSheet from "./ChallengeSheet";
 import GameTimer from "./GameTimer";
 import StationSheet from "./StationSheet";
-import type { Challenge, Claim, Station } from "./MapView";
+import type { Challenge, Claim, Region, Station } from "./MapView";
 
 const MapView = dynamic(() => import("./MapView"), {
   ssr: false,
@@ -43,6 +43,7 @@ type Props = {
   maxClaimDelta: number;
   userEmail: string;
   isAdmin: boolean;
+  region: Region;
 };
 
 type ChallengeWithText = Challenge & {
@@ -63,6 +64,7 @@ export default function GameClient({
   maxClaimDelta,
   userEmail,
   isAdmin,
+  region,
 }: Props) {
   const [claims, setClaims] = useState<Claim[]>(initialClaims);
   const [teamsState, setTeamsState] = useState<Team[]>(teams);
@@ -210,6 +212,7 @@ export default function GameClient({
         claimsByStation={claimsByStation}
         teamsById={teamsById}
         challenges={challenges}
+        region={region}
         onSelectStation={(id) => {
           setSelectedChallengeId(null);
           setSelectedStationId(id);

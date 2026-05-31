@@ -17,6 +17,17 @@ function parseOptionalPositiveInt(raw: string): number | null {
   return Number.isInteger(n) && n > 0 ? n : NaN;
 }
 
+function parseReward(raw: string, allowFractional: boolean): number {
+  const trimmed = raw.trim();
+  if (trimmed === "") return NaN;
+  const n = allowFractional
+    ? Number.parseFloat(trimmed)
+    : Number.parseInt(trimmed, 10);
+  if (!Number.isFinite(n) || n < 0) return NaN;
+  if (!allowFractional && !Number.isInteger(n)) return NaN;
+  return n;
+}
+
 export async function createChallenge(formData: FormData) {
   const gameId = String(formData.get("game_id") ?? "");
   if (!gameId) redirect("/");
@@ -25,13 +36,14 @@ export async function createChallenge(formData: FormData) {
   const lat = Number.parseFloat(String(formData.get("lat") ?? ""));
   const lng = Number.parseFloat(String(formData.get("lng") ?? ""));
   const type = String(formData.get("type") ?? "");
-  const rewardMin = Number.parseInt(
+  const allowFractional = type === "multiplier";
+  const rewardMin = parseReward(
     String(formData.get("reward_min") ?? ""),
-    10,
+    allowFractional,
   );
-  const rewardMax = Number.parseInt(
+  const rewardMax = parseReward(
     String(formData.get("reward_max") ?? ""),
-    10,
+    allowFractional,
   );
   const lockMinutes = parseOptionalPositiveInt(
     String(formData.get("lock_minutes") ?? ""),
@@ -48,8 +60,7 @@ export async function createChallenge(formData: FormData) {
     fail(gameId, "invalid lng");
   if (!VALID_TYPES.includes(type as ChallengeType))
     fail(gameId, "invalid type");
-  if (Number.isNaN(rewardMin) || rewardMin < 0)
-    fail(gameId, "invalid reward_min");
+  if (Number.isNaN(rewardMin)) fail(gameId, "invalid reward_min");
   if (Number.isNaN(rewardMax) || rewardMax < rewardMin)
     fail(gameId, "reward_max must be >= reward_min");
   if (Number.isNaN(lockMinutes as number))
@@ -157,29 +168,28 @@ export async function bulkImportChallenges(formData: FormData) {
       fail(gameId, `entry ${i}: invalid type`);
 
     // Reward can be given as a single fixed value (`reward`) or as a range
-    // (`reward_min` / `reward_max`).
+    // (`reward_min` / `reward_max`). Multipliers accept fractional
+    // coefficients (1.2×, 1.7×, …); ordinary and steal stay integer.
+    const allowFractional = c.type === "multiplier";
+    const isValidReward = (n: unknown): n is number =>
+      typeof n === "number" &&
+      Number.isFinite(n) &&
+      n >= 0 &&
+      (allowFractional || Number.isInteger(n));
     let rewardMin: number;
     let rewardMax: number;
     if (typeof c.reward === "number") {
-      if (!Number.isInteger(c.reward) || c.reward < 0)
+      if (!isValidReward(c.reward))
         fail(gameId, `entry ${i}: invalid reward`);
       rewardMin = c.reward;
       rewardMax = c.reward;
     } else {
-      if (
-        typeof c.reward_min !== "number" ||
-        !Number.isInteger(c.reward_min) ||
-        c.reward_min < 0
-      )
+      if (!isValidReward(c.reward_min))
         fail(gameId, `entry ${i}: invalid reward_min`);
-      if (
-        typeof c.reward_max !== "number" ||
-        !Number.isInteger(c.reward_max) ||
-        c.reward_max < c.reward_min
-      )
+      rewardMin = c.reward_min as number;
+      if (!isValidReward(c.reward_max) || (c.reward_max as number) < rewardMin)
         fail(gameId, `entry ${i}: reward_max must be >= reward_min`);
-      rewardMin = c.reward_min;
-      rewardMax = c.reward_max;
+      rewardMax = c.reward_max as number;
     }
 
     let lockMinutes: number | null = null;
@@ -235,13 +245,14 @@ export async function updateChallenge(formData: FormData) {
   const lat = Number.parseFloat(String(formData.get("lat") ?? ""));
   const lng = Number.parseFloat(String(formData.get("lng") ?? ""));
   const type = String(formData.get("type") ?? "");
-  const rewardMin = Number.parseInt(
+  const allowFractional = type === "multiplier";
+  const rewardMin = parseReward(
     String(formData.get("reward_min") ?? ""),
-    10,
+    allowFractional,
   );
-  const rewardMax = Number.parseInt(
+  const rewardMax = parseReward(
     String(formData.get("reward_max") ?? ""),
-    10,
+    allowFractional,
   );
   const lockMinutes = parseOptionalPositiveInt(
     String(formData.get("lock_minutes") ?? ""),
@@ -260,7 +271,7 @@ export async function updateChallenge(formData: FormData) {
   if (Number.isNaN(lat) || lat < -90 || lat > 90) failHere("invalid lat");
   if (Number.isNaN(lng) || lng < -180 || lng > 180) failHere("invalid lng");
   if (!VALID_TYPES.includes(type as ChallengeType)) failHere("invalid type");
-  if (Number.isNaN(rewardMin) || rewardMin < 0) failHere("invalid reward_min");
+  if (Number.isNaN(rewardMin)) failHere("invalid reward_min");
   if (Number.isNaN(rewardMax) || rewardMax < rewardMin)
     failHere("reward_max must be >= reward_min");
   if (Number.isNaN(lockMinutes as number))

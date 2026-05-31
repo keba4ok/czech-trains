@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "db:import-stations": "tsx --env-file=.env.local scripts/import-stations.ts"
+    "db:import-stations": "tsx --env-file=.env.local scripts/import-stations.ts --region czech",
+    "db:import-stations:czech": "tsx --env-file=.env.local scripts/import-stations.ts --region czech",
+    "db:import-stations:berlin": "tsx --env-file=.env.local scripts/import-stations.ts --region berlin"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.3",

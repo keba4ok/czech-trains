@@ -38,6 +38,12 @@ export default async function GamePage({ params }: { params: Params }) {
   const isAdmin = adminRow !== null;
   if (!membership && !isAdmin) redirect(`/games/${gameId}/join`);
 
+  const config = game.config as {
+    max_claim_delta?: number;
+    region?: "czech" | "berlin";
+  } | null;
+  const region: "czech" | "berlin" = config?.region ?? "czech";
+
   const [
     { data: teams },
     { data: claims },
@@ -57,6 +63,7 @@ export default async function GamePage({ params }: { params: Params }) {
       .from("stations")
       .select("id, name, lat, lng")
       .eq("playable", true)
+      .eq("region", region)
       .limit(5000),
     supabase
       .from("challenges")
@@ -70,9 +77,7 @@ export default async function GamePage({ params }: { params: Params }) {
 
   const currentTeam =
     teams?.find((t) => t.id === membership?.team_id) ?? null;
-  const maxClaimDelta =
-    (game.config as { max_claim_delta?: number } | null)?.max_claim_delta ??
-    4;
+  const maxClaimDelta = config?.max_claim_delta ?? 4;
 
   return (
     <GameClient
@@ -88,6 +93,7 @@ export default async function GamePage({ params }: { params: Params }) {
       maxClaimDelta={maxClaimDelta}
       userEmail={user.email ?? ""}
       isAdmin={isAdmin}
+      region={region}
     />
   );
 }

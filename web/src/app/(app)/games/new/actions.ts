@@ -2,12 +2,35 @@
 
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { DEFAULT_TEAMS } from "@/lib/games/team-defaults";
+import {
+  defaultTeamsFor,
+  MAX_TEAMS,
+  MIN_TEAMS,
+} from "@/lib/games/team-defaults";
+
+const VALID_REGIONS = new Set(["czech", "berlin"] as const);
+type Region = "czech" | "berlin";
 
 export async function createGame(formData: FormData) {
   const name = String(formData.get("name") ?? "").trim();
   if (!name) {
     redirect("/games/new?error=missing-name");
+  }
+
+  const rawRegion = String(formData.get("region") ?? "").trim();
+  if (!VALID_REGIONS.has(rawRegion as Region)) {
+    redirect("/games/new?error=invalid-region");
+  }
+  const region = rawRegion as Region;
+
+  const rawTeamCount = String(formData.get("team_count") ?? "").trim();
+  const teamCount = Number.parseInt(rawTeamCount, 10);
+  if (
+    !Number.isInteger(teamCount) ||
+    teamCount < MIN_TEAMS ||
+    teamCount > MAX_TEAMS
+  ) {
+    redirect("/games/new?error=invalid-team-count");
   }
 
   const rawDuration = String(formData.get("duration_hours") ?? "").trim();
@@ -33,6 +56,7 @@ export async function createGame(formData: FormData) {
         max_claim_delta: 4,
         challenge_lock_minutes: 30,
         duration_hours: duration,
+        region,
       },
     })
     .select("id, config")
@@ -54,12 +78,13 @@ export async function createGame(formData: FormData) {
     );
   }
 
-  // 3. Default 3 teams — RLS policy allows insert because user is now admin.
+  // 3. Seed the chosen number of teams — RLS policy allows insert because
+  // the user is now admin.
   const startingChips =
     ((game.config as { starting_chips?: number } | null)?.starting_chips ??
       10);
   const { error: teamsError } = await supabase.from("teams").insert(
-    DEFAULT_TEAMS.map((t) => ({
+    defaultTeamsFor(teamCount).map((t) => ({
       game_id: game.id,
       name: t.name,
       color: t.color,
