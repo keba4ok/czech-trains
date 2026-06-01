@@ -85,7 +85,11 @@ export default async function RootPage() {
 
         <div className="flex items-center justify-center gap-2 pt-2 text-xs text-zinc-500">
           <span>
-            Signed in as <span className="font-mono">{user.email}</span>
+            Signed in as{" "}
+            <span className="font-mono">
+              {(user.user_metadata?.display_name as string | undefined) ??
+                "anonymous"}
+            </span>
           </span>
           <span aria-hidden>·</span>
           <form action="/auth/signout" method="post">

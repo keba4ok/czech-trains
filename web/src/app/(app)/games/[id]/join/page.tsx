@@ -45,11 +45,8 @@ export default async function JoinGamePage({
     .select("team_id, user_id")
     .eq("game_id", gameId);
 
-  const { data: adminRows } = await admin
-    .from("game_admins")
-    .select("user_id")
-    .eq("game_id", gameId);
-  const isAdmin = (adminRows ?? []).some((r) => r.user_id === user.id);
+  // Every authenticated user has admin rights — no need to consult game_admins.
+  const isAdmin = true;
 
   const memberCounts = (members ?? []).reduce<Record<string, number>>(
     (acc, m) => {

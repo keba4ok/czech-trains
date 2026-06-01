@@ -1,30 +1,26 @@
 "use server";
 
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
-export async function signInWithEmail(formData: FormData) {
-  const email = String(formData.get("email") ?? "").trim();
-  if (!email) {
-    redirect("/login?error=missing-email");
+export async function signInWithName(formData: FormData) {
+  const name = String(formData.get("name") ?? "").trim();
+  if (!name) {
+    redirect("/login?error=missing-name");
+  }
+  if (name.length > 40) {
+    redirect("/login?error=name-too-long");
   }
 
   const supabase = await createClient();
-  const origin =
-    (await headers()).get("origin") ?? "http://localhost:3000";
 
-  const { error } = await supabase.auth.signInWithOtp({
-    email,
-    options: {
-      emailRedirectTo: `${origin}/auth/callback`,
-      shouldCreateUser: true,
-    },
+  const { error } = await supabase.auth.signInAnonymously({
+    options: { data: { display_name: name } },
   });
 
   if (error) {
     redirect(`/login?error=${encodeURIComponent(error.message)}`);
   }
 
-  redirect(`/login?sent=${encodeURIComponent(email)}`);
+  redirect("/");
 }

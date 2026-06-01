@@ -29,14 +29,10 @@ export default async function GamePage({ params }: { params: Params }) {
     .eq("user_id", user.id)
     .maybeSingle();
 
-  const { data: adminRow } = await supabase
-    .from("game_admins")
-    .select("user_id")
-    .eq("game_id", gameId)
-    .eq("user_id", user.id)
-    .maybeSingle();
-  const isAdmin = adminRow !== null;
-  if (!membership && !isAdmin) redirect(`/games/${gameId}/join`);
+  // Every authenticated user has admin rights on every game. Users still need
+  // to join a team to play, so non-members bounce to the join page.
+  const isAdmin = true;
+  if (!membership) redirect(`/games/${gameId}/join`);
 
   const config = game.config as {
     max_claim_delta?: number;
