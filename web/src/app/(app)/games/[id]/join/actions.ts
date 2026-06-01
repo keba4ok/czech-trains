@@ -112,12 +112,12 @@ export async function startGame(formData: FormData) {
     );
   }
 
-  // Deal the opening hand of 6 visible challenges. Any explicitly-pre-visible
+  // Deal the opening hand of 5 visible challenges. Any explicitly-pre-visible
   // ones (from bulk import) don't count toward the deal — draw_random_challenges
   // only flips hidden ones.
   const { error: drawError } = await supabase.rpc("draw_random_challenges", {
     p_game_id: gameId,
-    p_n: 6,
+    p_n: 5,
   });
   if (drawError) {
     redirect(

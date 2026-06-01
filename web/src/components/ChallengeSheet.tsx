@@ -38,6 +38,10 @@ function rewardSummary(c: Props["challenge"]): string {
   return `${c.reward_min}% of a rival team's chips`;
 }
 
+function failBonusPct(c: Props["challenge"]): number {
+  return (c.failed_team_ids ?? []).length * 25;
+}
+
 function lockTimeLeft(lockedUntil: string | null): string | null {
   if (!lockedUntil) return null;
   const ms = new Date(lockedUntil).getTime() - Date.now();
@@ -123,6 +127,11 @@ export default function ChallengeSheet({
 
         <p className="text-sm text-zinc-400">
           Reward: <span className="text-zinc-200">{rewardSummary(challenge)}</span>
+          {failBonusPct(challenge) > 0 && !isCompleted ? (
+            <span className="ml-2 text-emerald-400">
+              +{failBonusPct(challenge)}% fail bonus
+            </span>
+          ) : null}
         </p>
 
         {/* === Status-specific body === */}
