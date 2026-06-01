@@ -52,7 +52,7 @@ export async function createGame(formData: FormData) {
       name,
       created_by: user.id,
       config: {
-        starting_chips: 10,
+        starting_chips: 20,
         max_claim_delta: 4,
         challenge_lock_minutes: 30,
         duration_hours: duration,
